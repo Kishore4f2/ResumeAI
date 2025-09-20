@@ -1,5 +1,4 @@
 import { Sparkles } from 'lucide-react';
-import { ThemeToggle } from './theme-toggle';
 
 export function Header() {
   return (
@@ -9,7 +8,6 @@ export function Header() {
            <Sparkles className="h-6 w-6 text-primary" />
           <span className="text-lg font-bold">ResumeAI</span>
         </div>
-        <ThemeToggle />
       </div>
     </header>
   );
