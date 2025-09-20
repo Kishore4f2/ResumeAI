@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useRef, useState, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Check, Copy, Loader2, Sparkles } from 'lucide-react';
 import { createSummary, type State } from '@/app/actions';
 import { Button } from '@/components/ui/button';
@@ -125,7 +125,7 @@ function ResultSkeleton() {
 
 export function ClientPage() {
   const initialState: State = { message: null, errors: {}, data: null };
-  const [state, dispatch] = useFormState(createSummary, initialState);
+  const [state, dispatch] = useActionState(createSummary, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
 
