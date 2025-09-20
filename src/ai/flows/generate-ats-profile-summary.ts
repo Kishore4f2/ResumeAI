@@ -61,7 +61,7 @@ const profileSummaryPrompt = ai.definePrompt({
   tools: [estimateAtsScore],
   input: {schema: GenerateAtsProfileSummaryInputSchema},
   output: {schema: GenerateAtsProfileSummaryOutputSchema},
-  prompt: `You are an AI resume expert. Generate a concise profile summary in a single paragraph of about 7 lines, specifically for a B.Tech ECE graduate fresher, based on the following job description. Do not use bullet points. Optimize the summary for Applicant Tracking Systems (ATS) with a score of 70% or higher. Use the estimateAtsScore tool to validate the ATS score and improve the summary if needed.
+  prompt: `You are an AI resume expert. Generate a concise profile summary in a single paragraph of about 7 lines, specifically for a B.Tech ECE graduate fresher, based on the following job description. Do not use bullet points. Do not include any location information. Optimize the summary for Applicant Tracking Systems (ATS) with a score of 70% or higher. Use the estimateAtsScore tool to validate the ATS score and improve the summary if needed.
 
 Job Description: {{{jobDescription}}}
 
