@@ -140,11 +140,10 @@ export function ClientPage() {
   const [state, dispatch] = useActionState(createSummary, initialState);
   const { pending } = useFormStatus();
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [result, setResult] = useState<State['data']>(null);
   const [isFirstGeneration, setIsFirstGeneration] = useState(true);
-
-  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state.message === 'Success' && state.data) {
@@ -152,6 +151,8 @@ export function ClientPage() {
       if (isFirstGeneration) {
         setIsFirstGeneration(false);
       }
+      // Do not reset the form to keep the job description
+      // formRef.current?.reset(); 
     } else if (state.message && state.message !== 'Success') {
       toast({
         variant: 'destructive',
@@ -176,7 +177,9 @@ export function ClientPage() {
 
         <form
           ref={formRef}
-          action={dispatch}
+          action={(formData) => {
+            dispatch(formData);
+          }}
           className="w-full space-y-6"
         >
           <Card className="w-full">
