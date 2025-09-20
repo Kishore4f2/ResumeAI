@@ -15,10 +15,7 @@ export type State = {
     jobDescription?: string[];
   };
   message?: string | null;
-  data?: {
-    profileSummary: string;
-    atsScore: number;
-  } | null;
+  data?: string | null;
 };
 
 export async function createSummary(

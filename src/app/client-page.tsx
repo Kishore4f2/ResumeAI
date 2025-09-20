@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -48,13 +47,13 @@ function SubmitButton({ hasResult }: { hasResult: boolean }) {
 function ResultCard({
   result,
 }: {
-  result: { profileSummary: string; atsScore: number };
+  result: string;
 }) {
   const { toast } = useToast();
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(result.profileSummary);
+    navigator.clipboard.writeText(result);
     setIsCopied(true);
     toast({
       title: 'Copied to Clipboard!',
@@ -63,39 +62,18 @@ function ResultCard({
     setTimeout(() => setIsCopied(false), 2000);
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 70) return '120 73% 75%'; // accent (green)
-    if (score >= 50) return '43 74% 66%'; // chart-4 (yellow)
-    return '0 84.2% 60.2%'; // destructive (red)
-  };
-
-  const scoreColorVar = getScoreColor(result.atsScore);
-
   return (
     <Card className="w-full animate-in fade-in-50 duration-500">
       <CardHeader>
         <CardTitle>Your AI-Generated Profile Summary</CardTitle>
         <CardDescription>
-          Optimized for ATS with a score of {result.atsScore}%.
+          Your ATS-optimized profile summary.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="whitespace-pre-wrap rounded-md border bg-muted/50 p-4 text-sm leading-relaxed">
-          {result.profileSummary}
+          {result}
         </p>
-        <div className="space-y-2">
-          <Label htmlFor="ats-score">ATS Score</Label>
-          <div
-            style={{ '--primary': scoreColorVar } as React.CSSProperties}
-            className="transition-all duration-500"
-          >
-            <Progress value={result.atsScore} id="ats-score" />
-          </div>
-          <p className="text-xs text-muted-foreground">
-            An estimated score based on keyword relevance and structure. Aim for
-            70% or higher.
-          </p>
-        </div>
       </CardContent>
       <CardFooter>
         <Button variant="outline" onClick={handleCopy} className="w-full">
@@ -122,11 +100,6 @@ function ResultSkeleton() {
         <div className="space-y-2">
           <Skeleton className="h-20 w-full" />
         </div>
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-24" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-3 w-3/4" />
-        </div>
       </CardContent>
       <CardFooter>
         <Skeleton className="h-10 w-full" />
@@ -138,12 +111,12 @@ function ResultSkeleton() {
 export function ClientPage() {
   const initialState: State = { message: null, errors: {}, data: null };
   const [state, dispatch] = useActionState(createSummary, initialState);
-  const { pending } = useFormStatus();
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
 
   const [result, setResult] = useState<State['data']>(null);
   const [isFirstGeneration, setIsFirstGeneration] = useState(true);
+  const { pending } = useFormStatus();
 
   useEffect(() => {
     if (state.message === 'Success' && state.data) {
