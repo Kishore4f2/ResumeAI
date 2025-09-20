@@ -3,7 +3,7 @@
 'use server';
 
 /**
- * @fileOverview Generates an ATS-optimized profile summary for fresher resumes based on a job description.
+ * @fileOverview Generates an ATS-optimized profile summary for B.Tech ECE graduate fresher resumes based on a job description.
  *
  * - generateAtsProfileSummary - A function that generates the profile summary.
  * - GenerateAtsProfileSummaryInput - The input type for the generateAtsProfileSummary function.
@@ -26,7 +26,7 @@ const GenerateAtsProfileSummaryOutputSchema = z.object({
   profileSummary: z
     .string()
     .describe(
-      `A profile summary paragraph of about 7 lines, tailored for fresher resumes and optimized for ATS.`
+      `A profile summary paragraph of about 7 lines, tailored for B.Tech ECE graduate fresher resumes and optimized for ATS.`
     ),
   atsScore: z.number().describe('The estimated ATS score of the profile summary.'),
 });
@@ -61,7 +61,7 @@ const profileSummaryPrompt = ai.definePrompt({
   tools: [estimateAtsScore],
   input: {schema: GenerateAtsProfileSummaryInputSchema},
   output: {schema: GenerateAtsProfileSummaryOutputSchema},
-  prompt: `You are an AI resume expert. Generate a concise profile summary in a single paragraph of about 7 lines, tailored for fresher resumes based on the following job description. Do not use bullet points. Optimize the summary for Applicant Tracking Systems (ATS) with a score of 70% or higher. Use the estimateAtsScore tool to validate the ATS score and improve the summary if needed.
+  prompt: `You are an AI resume expert. Generate a concise profile summary in a single paragraph of about 7 lines, specifically for a B.Tech ECE graduate fresher, based on the following job description. Do not use bullet points. Optimize the summary for Applicant Tracking Systems (ATS) with a score of 70% or higher. Use the estimateAtsScore tool to validate the ATS score and improve the summary if needed.
 
 Job Description: {{{jobDescription}}}
 
