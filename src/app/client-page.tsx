@@ -128,8 +128,8 @@ export function ClientPage() {
   const [state, dispatch] = useActionState(createSummary, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
-  const jobDescriptionRef = useRef<HTMLTextAreaElement>(null);
 
+  const [jobDescription, setJobDescription] = useState('');
   const [result, setResult] = useState<State['data']>(null);
   const [isFirstGeneration, setIsFirstGeneration] = useState(true);
   const { pending } = useFormStatus();
@@ -164,12 +164,7 @@ export function ClientPage() {
 
         <form
           ref={formRef}
-          action={(formData) => {
-            if (jobDescriptionRef.current) {
-              formData.set('jobDescription', jobDescriptionRef.current.value);
-            }
-            dispatch(formData);
-          }}
+          action={dispatch}
           className="w-full space-y-6"
         >
           <Card className="w-full">
@@ -186,13 +181,14 @@ export function ClientPage() {
                   Job Description
                 </Label>
                 <Textarea
-                  ref={jobDescriptionRef}
                   id="jobDescription"
                   name="jobDescription"
                   placeholder="e.g., We are looking for a software engineer with experience in..."
                   rows={10}
                   required
                   className="text-base"
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
                 />
                 {state.errors?.jobDescription && (
                   <p className="text-sm font-medium text-destructive">
