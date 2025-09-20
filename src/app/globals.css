@@ -11,7 +11,7 @@
     --card-foreground: 10, 10, 10;
     --popover: 255, 255, 255;
     --popover-foreground: 10, 10, 10;
-    --primary: 220 85% 55%;
+    --primary: 330 85% 55%;
     --primary-foreground: 255 255 255;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 10, 10, 10;
@@ -23,7 +23,7 @@
     --destructive-foreground: 250 250 250;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 220 85% 55%;
+    --ring: 330 85% 55%;
     --radius: 0.5rem;
 
     --chart-1: 12 76% 61%;
@@ -34,12 +34,12 @@
   }
 
   .dark {
-    --background-start-rgb: 10, 10, 15;
-    --background-end-rgb: 10, 10, 15;
-    --foreground: 250, 250, 250;
-    --card: 20 20 25;
+    --background-start-rgb: 20, 25, 35;
+    --background-end-rgb: 20, 25, 35;
+    --foreground: 250 250 250;
+    --card: 25 30 40;
     --card-foreground: 250 250 250;
-    --popover: 10 10 15;
+    --popover: 25 30 40;
     --popover-foreground: 250 250 250;
     --primary: 210 90% 60%;
     --primary-foreground: 10 10 10;
