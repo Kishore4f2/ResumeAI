@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { Check, Copy, Sparkles, Loader2 } from 'lucide-react';
+import { Check, Copy, Loader2, Sparkles } from 'lucide-react';
 import { createSummary, type State } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,9 +14,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Skeleton } from '@/components/ui/skeleton';
 
 function SubmitButton({ hasResult }: { hasResult: boolean }) {
   const { pending } = useFormStatus();
@@ -124,8 +124,6 @@ export function ClientPage() {
       if (isFirstGeneration) {
         setIsFirstGeneration(false);
       }
-      // Do not reset the form to keep the job description
-      // formRef.current?.reset(); 
     } else if (state.message && state.message !== 'Success') {
       toast({
         variant: 'destructive',
