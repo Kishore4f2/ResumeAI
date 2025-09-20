@@ -37,7 +37,7 @@ export async function createSummary(
     const result = await generateAtsProfileSummary({
       jobDescription: validatedFields.data.jobDescription,
     });
-    return { data: result, message: 'Success' };
+    return { data: result.profileSummary, message: 'Success' };
   } catch (e) {
     console.error(e);
     return {

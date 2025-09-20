@@ -22,9 +22,11 @@ export type GenerateAtsProfileSummaryInput = z.infer<
   typeof GenerateAtsProfileSummaryInputSchema
 >;
 
-const GenerateAtsProfileSummaryOutputSchema = z.string().describe(
+const GenerateAtsProfileSummaryOutputSchema = z.object({
+  profileSummary: z.string().describe(
       `A profile summary paragraph of about 7 lines, tailored for B.Tech ECE graduate fresher resumes and optimized for ATS.`
-    );
+    ),
+});
 export type GenerateAtsProfileSummaryOutput = z.infer<
   typeof GenerateAtsProfileSummaryOutputSchema
 >;
@@ -43,7 +45,7 @@ const profileSummaryPrompt = ai.definePrompt({
 
 Job Description: {{{jobDescription}}}
 
-Profile Summary:`,
+`,
 });
 
 const generateAtsProfileSummaryFlow = ai.defineFlow(
