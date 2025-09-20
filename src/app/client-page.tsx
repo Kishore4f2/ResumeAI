@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState, useActionState } from 'react';
-import { useFormStatus } from 'react-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import { Check, Copy, Loader2, Sparkles } from 'lucide-react';
 import { createSummary, type State } from '@/app/actions';
 import { Button } from '@/components/ui/button';
@@ -125,7 +125,7 @@ function ResultSkeleton() {
 
 export function ClientPage() {
   const initialState: State = { message: null, errors: {}, data: null };
-  const [state, dispatch] = useActionState(createSummary, initialState);
+  const [state, dispatch] = useFormState(createSummary, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -149,6 +149,10 @@ export function ClientPage() {
     }
   }, [state, isFirstGeneration, toast]);
 
+  const handleFormAction = (formData: FormData) => {
+    dispatch(formData);
+  };
+
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12 sm:py-20">
       <div className="flex flex-col items-center gap-10">
@@ -156,7 +160,7 @@ export function ClientPage() {
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl font-headline">
             Generate Your ATS-Optimized Resume Summary
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+          <p className="mt-6 max-w-2xl text-lg text-muted-foreground text-center">
             Paste a job description below and let our AI create a powerful,
             professional profile summary tailored for freshers.
           </p>
@@ -164,7 +168,7 @@ export function ClientPage() {
 
         <form
           ref={formRef}
-          action={dispatch}
+          action={handleFormAction}
           className="w-full space-y-6"
         >
           <Card className="w-full">
