@@ -160,7 +160,7 @@ export function ClientPage() {
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl font-headline">
             Generate Your ATS-Optimized Resume Summary
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground text-center">
+          <p className="mt-6 max-w-2xl text-lg text-muted-foreground mx-auto">
             Paste a job description below and let our AI create a powerful,
             professional profile summary tailored for freshers.
           </p>
