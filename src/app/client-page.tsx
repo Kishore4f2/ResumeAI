@@ -32,7 +32,7 @@ function SubmitButton({ hasResult }: { hasResult: boolean }) {
       {pending ? (
         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
       ) : (
-        <Sparkles className="mr-2 h-5 w-5" />
+        <Sparkles className="mr-2 h-5 w-5" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--primary)))' }}/>
       )}
       {pending
         ? hasResult
@@ -72,13 +72,13 @@ function ResultCard({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <p className="whitespace-pre-wrap rounded-md border bg-muted/50 p-4 text-sm leading-relaxed">
+        <p className="rounded-lg border bg-black/10 p-4 text-base leading-relaxed backdrop-blur-sm">
           {result.profileSummary}
         </p>
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm font-medium">
+        <div className="space-y-3">
+          <div className="flex justify-between text-sm font-medium text-muted-foreground">
             <Label htmlFor="ats-progress">Estimated ATS Score</Label>
-            <span>{result.atsScore}%</span>
+            <span className="font-bold text-foreground">{result.atsScore}%</span>
           </div>
           <Progress id="ats-progress" value={result.atsScore} className="h-2" />
         </div>
@@ -101,23 +101,23 @@ function ResultSkeleton() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <Skeleton className="h-7 w-3/4" />
-        <Skeleton className="h-4 w-1/2" />
+        <Skeleton className="h-8 w-3/4 rounded-md" />
+        <Skeleton className="h-5 w-1/2 rounded-md" />
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Skeleton className="h-20 w-full" />
+          <Skeleton className="h-24 w-full rounded-md" />
         </div>
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="flex justify-between">
-            <Skeleton className="h-4 w-1/4" />
-            <Skeleton className="h-4 w-1/6" />
+            <Skeleton className="h-5 w-1/4 rounded-md" />
+            <Skeleton className="h-5 w-1/6 rounded-md" />
           </div>
-          <Skeleton className="h-2 w-full" />
+          <Skeleton className="h-2 w-full rounded-full" />
         </div>
       </CardContent>
       <CardFooter>
-        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-12 w-full rounded-full" />
       </CardFooter>
     </Card>
   );
@@ -150,13 +150,13 @@ export function ClientPage() {
   }, [state, isFirstGeneration, toast]);
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-8 sm:py-12">
-      <div className="flex flex-col items-center gap-8">
+    <div className="container mx-auto max-w-4xl px-4 py-12 sm:py-20">
+      <div className="flex flex-col items-center gap-10">
         <div className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl font-headline">
             Generate Your ATS-Optimized Resume Summary
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+          <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
             Paste a job description below and let our AI create a powerful,
             professional profile summary tailored for freshers.
           </p>
@@ -191,13 +191,13 @@ export function ClientPage() {
                   onChange={(e) => setJobDescription(e.target.value)}
                 />
                 {state.errors?.jobDescription && (
-                  <p className="text-sm font-medium text-destructive">
+                  <p className="text-sm font-medium text-destructive pt-2">
                     {state.errors.jobDescription[0]}
                   </p>
                 )}
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
+            <CardFooter className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
               <SubmitButton hasResult={!!result} />
               <p className="text-xs text-muted-foreground">
                 By generating, you agree to our Terms of Service.
