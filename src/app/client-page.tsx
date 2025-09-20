@@ -32,7 +32,7 @@ function SubmitButton({ hasResult }: { hasResult: boolean }) {
       {pending ? (
         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
       ) : (
-        <Sparkles className="mr-2 h-5 w-5" style={{ filter: 'drop-shadow(0 0 8px hsl(var(--primary)))' }}/>
+        <Sparkles className="mr-2 h-5 w-5" />
       )}
       {pending
         ? hasResult
@@ -72,7 +72,7 @@ function ResultCard({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        <p className="rounded-lg border bg-black/10 p-4 text-base leading-relaxed backdrop-blur-sm">
+        <p className="rounded-lg border bg-secondary p-4 text-base leading-relaxed">
           {result.profileSummary}
         </p>
         <div className="space-y-3">
