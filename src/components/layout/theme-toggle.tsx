@@ -12,10 +12,7 @@ export function ThemeToggle() {
   React.useEffect(() => {
     setMounted(true);
     const storedTheme = localStorage.getItem('theme');
-    if (
-      storedTheme === 'dark' ||
-      (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
+    if (storedTheme === 'dark') {
       setTheme('dark');
       document.documentElement.classList.add('dark');
     } else {
