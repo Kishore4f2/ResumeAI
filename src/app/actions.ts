@@ -1,7 +1,10 @@
 
 'use server';
 
-import { generateAtsProfileSummary } from '@/ai/flows/generate-ats-profile-summary';
+import {
+  generateAtsProfileSummary,
+  GenerateAtsProfileSummaryOutput,
+} from '@/ai/flows/generate-ats-profile-summary';
 import { z } from 'zod';
 
 const FormSchema = z.object({
@@ -15,7 +18,7 @@ export type State = {
     jobDescription?: string[];
   };
   message?: string | null;
-  data?: string | null;
+  data?: GenerateAtsProfileSummaryOutput | null;
 };
 
 export async function createSummary(
@@ -37,7 +40,7 @@ export async function createSummary(
     const result = await generateAtsProfileSummary({
       jobDescription: validatedFields.data.jobDescription,
     });
-    return { data: result.profileSummary, message: 'Success' };
+    return { data: result, message: 'Success' };
   } catch (e) {
     console.error(e);
     return {

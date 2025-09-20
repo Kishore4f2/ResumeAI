@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
@@ -47,13 +48,13 @@ function SubmitButton({ hasResult }: { hasResult: boolean }) {
 function ResultCard({
   result,
 }: {
-  result: string;
+  result: { profileSummary: string; atsScore: number };
 }) {
   const { toast } = useToast();
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(result);
+    navigator.clipboard.writeText(result.profileSummary);
     setIsCopied(true);
     toast({
       title: 'Copied to Clipboard!',
@@ -67,13 +68,20 @@ function ResultCard({
       <CardHeader>
         <CardTitle>Your AI-Generated Profile Summary</CardTitle>
         <CardDescription>
-          Your ATS-optimized profile summary.
+          Your ATS-optimized profile summary and score.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <p className="whitespace-pre-wrap rounded-md border bg-muted/50 p-4 text-sm leading-relaxed">
-          {result}
+          {result.profileSummary}
         </p>
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm font-medium">
+            <Label htmlFor="ats-progress">Estimated ATS Score</Label>
+            <span>{result.atsScore}%</span>
+          </div>
+          <Progress id="ats-progress" value={result.atsScore} className="h-2" />
+        </div>
       </CardContent>
       <CardFooter>
         <Button variant="outline" onClick={handleCopy} className="w-full">
@@ -96,9 +104,16 @@ function ResultSkeleton() {
         <Skeleton className="h-7 w-3/4" />
         <Skeleton className="h-4 w-1/2" />
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div className="space-y-2">
           <Skeleton className="h-20 w-full" />
+        </div>
+        <div className="space-y-2">
+          <div className="flex justify-between">
+            <Skeleton className="h-4 w-1/4" />
+            <Skeleton className="h-4 w-1/6" />
+          </div>
+          <Skeleton className="h-2 w-full" />
         </div>
       </CardContent>
       <CardFooter>
@@ -113,6 +128,7 @@ export function ClientPage() {
   const [state, dispatch] = useActionState(createSummary, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
+  const jobDescriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const [result, setResult] = useState<State['data']>(null);
   const [isFirstGeneration, setIsFirstGeneration] = useState(true);
@@ -149,6 +165,9 @@ export function ClientPage() {
         <form
           ref={formRef}
           action={(formData) => {
+            if (jobDescriptionRef.current) {
+              formData.set('jobDescription', jobDescriptionRef.current.value);
+            }
             dispatch(formData);
           }}
           className="w-full space-y-6"
@@ -167,6 +186,7 @@ export function ClientPage() {
                   Job Description
                 </Label>
                 <Textarea
+                  ref={jobDescriptionRef}
                   id="jobDescription"
                   name="jobDescription"
                   placeholder="e.g., We are looking for a software engineer with experience in..."
